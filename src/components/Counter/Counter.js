@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { increaseCounter, decreaseCounter } from "../../redux";
+import { increaseCounter, decreaseCounter } from "../../redux/counter/actions";
 
 const Counter = (props) => {
   // step 2: define an event handler which will trigger an action dispatcher
@@ -26,7 +26,7 @@ const Counter = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  counter: state.counter,
+  counter: state.counter.counter,
 });
 
 const mapDispatchToProps = (dispatch) => ({
