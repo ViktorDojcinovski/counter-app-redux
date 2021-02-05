@@ -1,27 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { asyncFetchUsers } from "../../redux/users/actions";
+
 class UsersList extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      usersList: [],
-    };
-  }
-
   componentDidMount() {
-    // fetch or axios --> use either of these methods
-    fetch("https://jsonplaceholder.typicode.com/users", {
-      /* headers... */
-    })
-      .then((result) => {
-        return result.json();
-      })
-      .then((data) => {
-        console.log(data);
-        this.setState({ usersList: data });
-      });
+    this.props.fetchUsers();
   }
 
   render() {
@@ -29,7 +13,7 @@ class UsersList extends React.Component {
       <div>
         <>
           <ul>
-            {this.state.usersList.map((user) => {
+            {this.props.usersList.map((user) => {
               return <li key={user.id}>{user.name}</li>;
             })}
           </ul>
@@ -39,12 +23,12 @@ class UsersList extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   usersList: state.users.usersList,
-// });
+const mapStateToProps = (state) => ({
+  usersList: state.users.usersList,
+});
 
-// const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  fetchUsers: () => dispatch(asyncFetchUsers()),
+});
 
-// export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
-
-export default UsersList;
+export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
